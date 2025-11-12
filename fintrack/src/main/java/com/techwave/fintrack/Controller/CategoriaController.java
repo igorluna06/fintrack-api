@@ -2,7 +2,10 @@ package com.techwave.fintrack.Controller;
 
 import com.techwave.fintrack.model.Categoria;
 import com.techwave.fintrack.service.CategoriaService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,13 +28,13 @@ public class CategoriaController {
     }
 
     @PostMapping
-    public Categoria Salvar(@RequestBody Categoria categoria){
-        return service.salvar(categoria);
+    public ResponseEntity<Categoria> Salvar(@Valid @RequestBody Categoria categoria){
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.salvar(categoria));
     }
 
     @PutMapping("/{id}")
-    public Categoria atualizar(@PathVariable Long id, @RequestBody Categoria categoria){
-        return service.atualizar(id, categoria);
+    public ResponseEntity<Categoria> atualizar(@PathVariable Long id,@Valid @RequestBody Categoria categoria){
+        return ResponseEntity.ok(service.atualizar(id, categoria));
     }
 
     @DeleteMapping("/{id}")

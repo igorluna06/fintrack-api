@@ -3,7 +3,10 @@ package com.techwave.fintrack.Controller;
 import com.techwave.fintrack.model.Categoria;
 import com.techwave.fintrack.model.Transacao;
 import com.techwave.fintrack.service.TransacaoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,13 +28,13 @@ public class TransacaoController {
     }
 
     @PostMapping
-    public Transacao Salvar(@RequestBody Transacao transacao){
-        return service.salvar(transacao);
+    public ResponseEntity<Transacao> Salvar(@Valid @RequestBody Transacao transacao){
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.salvar(transacao));
     }
 
     @PutMapping("/{id}")
-    public Transacao atualizar(@PathVariable Long id, @RequestBody Transacao transacao){
-        return service.atualizar(id, transacao);
+    public ResponseEntity<Transacao> atualizar(@PathVariable Long id,@Valid @RequestBody Transacao transacao){
+        return ResponseEntity.ok(service.atualizar(id, transacao));
     }
 
     @DeleteMapping("/{id}")
